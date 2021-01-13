@@ -19,8 +19,7 @@ public class Sorts {
 		
 		int count =0;
 		
-		while(true) {
-			
+		do {		
 			isPass =true;
 			for (i=0; i<arrSize; i++) {
 				if(arr[i]>arr[i+1]) {
@@ -31,11 +30,7 @@ public class Sorts {
 					count +=1;
 				}
 			}
-			
-			if(isPass) {
-				break;
-			}
-		}
+		}while(isPass);
 		
 		System.out.println("repeat : " + count);
 		
@@ -132,18 +127,24 @@ public class Sorts {
 	public static int[] shellSort(int[] arr) {
 		
 		int arrSize =arr.length;
-		// gap 은 간격을 의미
-		for(int h=arrSize/2; h>0; h/=2) {
-			for(int i=h; i<arrSize; i++) {
-				int j;
-				int tmp =arr[i];
-				for (j=i-h; j>=0 && arr[j] >tmp; j-=h) {
-					arr[j+h] =arr[j];
-				}
-				arr[j+h] =tmp;
-			}
-		}
+		int i, j, temp, step;
 		
+		//step이 배수가 되지않도록해야함!
+		// 1, 4, 13, ...
+		for(step=1; step<arrSize/9; step=step*3+1);
+		
+		while(step>0) {
+			for(i=step; i<arrSize; i++) {
+				temp =arr[i];
+				j=i;
+				while(j>0 && temp>arr[j]) {
+					arr[j+step] =arr[j];
+					j-=step;
+				}
+				arr[j+step] =temp;
+			}
+			step/=3;
+		}
 		return arr;
 	}
 	
@@ -185,7 +186,7 @@ public class Sorts {
 	}
 	
 	//병합정렬(제작중) 폰노이만....
-	public static int[] mergeSort(int[] arr) {
+	public static int[] MergeSort(int[] arr) {
 		
 		int arrSize =arr.length;
 		int left =0, right =arrSize-1;
