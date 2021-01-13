@@ -2,8 +2,14 @@ package Sorts;
 
 import java.util.Stack;
 
+/************************************************************************
+						정렬 모음집 
+		버블, 선택, 퀵, 도수, 삽입, 셸 등으로 구성  추후 추가 
+************************************************************************/
+
 public class Sorts {
 	
+	//버블정렬
 	public static int[] bubbleSort(int[] arr) {
 		
 		int arrSize =arr.length-1;
@@ -36,6 +42,7 @@ public class Sorts {
 		return arr;
 	}
 	
+	//선택정렬
 	public static int[] selectionSort(int[] arr) {
 		
 		int arrSize =arr.length;
@@ -65,11 +72,12 @@ public class Sorts {
 		return arr;
 	}
 	
+	//도수정렬
 	public static int[] countingSort(int[] arr) {
 			
 		int arrSize =arr.length;
 		int max=0;
-		int i;
+		int i, count=0;
 		
 		for (i=0; i<arrSize; i++) {
 			if(max<arr[i]) {
@@ -97,6 +105,7 @@ public class Sorts {
 		return purposes;
 	}
 	
+	//삽입정렬
 	public static int[] insertionSort(int[] arr) {
 		
 		int arrSize =arr.length;
@@ -119,7 +128,7 @@ public class Sorts {
 		return arr;
 	}
 	
-	//공부 필요
+	//셸정렬(삽입정렬 + 공간)
 	public static int[] shellSort(int[] arr) {
 		
 		int arrSize =arr.length;
@@ -138,22 +147,8 @@ public class Sorts {
 		return arr;
 	}
 	
+	//퀵정렬
 	public static int[] quickSort(int[] arr) {
-		
-		class point {
-			private int left;
-			private int right;
-			public point(int left,  int right) {
-				this.right =right;
-				this.left =left;
-			}
-			public int getLeft() {
-				return left;
-			}
-			public int getRight() {
-				return right;
-			}
-		}
 		
 		int arrSize =arr.length;
 		int pivot, left, right, temp;
@@ -189,7 +184,25 @@ public class Sorts {
 		return arr;
 	}
 	
-	public static int[] mergeSort(int[] arr1, int[] arr2) {
+	//병합정렬(제작중) 폰노이만....
+	public static int[] mergeSort(int[] arr) {
+		
+		int arrSize =arr.length;
+		int left =0, right =arrSize-1;
+		Stack<point> pStack =new Stack<point>();
+		
+		while(true) {
+			
+			if(true) {
+				break;
+			}
+		}
+		
+		return null;	
+	}
+	
+	//정렬아님!! 병합정렬시 만들어놓은것!
+	private static int[] mergeArray(int[] arr1, int[] arr2) {
 
 		int[] res1 =quickSort(arr1);
 		int[] res2 =quickSort(arr2);
@@ -229,5 +242,21 @@ public class Sorts {
 		return res3;	
 	}
 	
+}
+
+//스택사용시 포인트 클래스
+class point {
+	private int left;
+	private int right;
+	public point(int left,  int right) {
+		this.right =right;
+		this.left =left;
+	}
+	public int getLeft() {
+		return left;
+	}
+	public int getRight() {
+		return right;
+	}
 }
 
