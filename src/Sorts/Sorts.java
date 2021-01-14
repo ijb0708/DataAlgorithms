@@ -8,8 +8,17 @@ import java.util.Stack;
 ************************************************************************/
 
 public class Sorts {
+	static private int[] sortsArr;
 	
 	//버블정렬
+	/**********************
+	 * 
+	 * 아주 기본적인 정렬임 매우 쉬움 대신 속도는 보장 못함
+	 * 거품이 뜨는 것처럼 가벼운게 뜬는 구조로 정렬하는형태
+	 * 
+	 * @param arr
+	 * @return
+	 */
 	public static int[] bubbleSort(int[] arr) {
 		
 		int arrSize =arr.length-1;
@@ -38,6 +47,14 @@ public class Sorts {
 	}
 	
 	//선택정렬
+	/*********
+	 * 
+	 * 앞에서부터 직관적으로 비교하여 사용하는 정렬 매우단순 무식
+	 * 설명 불필요! 
+	 * 
+	 * @param arr
+	 * @return
+	 */
 	public static int[] selectionSort(int[] arr) {
 		
 		int arrSize =arr.length;
@@ -68,6 +85,13 @@ public class Sorts {
 	}
 	
 	//도수정렬
+	/*****
+	 * 
+	 * 계산을 이용하여  정렬하는 방식
+	 * 
+	 * @param arr
+	 * @return
+	 */
 	public static int[] countingSort(int[] arr) {
 			
 		int arrSize =arr.length;
@@ -136,8 +160,8 @@ public class Sorts {
 		while(step>0) {
 			for(i=step; i<arrSize; i++) {
 				temp =arr[i];
-				j=i;
-				while(j>0 && temp>arr[j]) {
+				j=i-step;
+				while(j>=0 && temp<arr[j]) {
 					arr[j+step] =arr[j];
 					j-=step;
 				}
@@ -148,7 +172,7 @@ public class Sorts {
 		return arr;
 	}
 	
-	//퀵정렬
+	//퀵정렬 스택 버젼
 	public static int[] quickSort(int[] arr) {
 		
 		int arrSize =arr.length;
@@ -185,62 +209,94 @@ public class Sorts {
 		return arr;
 	}
 	
-	//병합정렬(제작중) 폰노이만....
-	public static int[] MergeSort(int[] arr) {
+	//병합정렬 재귀버젼 
+	public static int[] mergeSort(int[] arr) {
 		
-		int arrSize =arr.length;
-		int left =0, right =arrSize-1;
-		Stack<point> pStack =new Stack<point>();
+		sortsArr=arr;
+		reqMerge(0, arr.length-1);
 		
-		while(true) {
-			
-			if(true) {
-				break;
-			}
-		}
-		
-		return null;	
+        return arr;
+
 	}
 	
-	//정렬아님!! 병합정렬시 만들어놓은것!
-	private static int[] mergeArray(int[] arr1, int[] arr2) {
-
-		int[] res1 =quickSort(arr1);
-		int[] res2 =quickSort(arr2);
+	private static void reqMerge(int start, int end) {
 		
-		int resSize1 =res1.length;
-		int resSize2 =res2.length;
+		int arrSize =sortsArr.length;
+		int middle;
 		
-		int resPoint1 =0;
-		int resPoint2 =0;
-		int resPoint3 =0;
+		if(start >= end) {
+			return;
+		}
 		
-		int[] res3 =new int[resSize1 + resSize2];
+		System.out.println("start : " + start +  " end : " + end);
+		middle =(start+end)/2;
+		reqMerge(start, middle);
+		reqMerge(middle+1, end);
 		
-		while(resPoint1<resSize1 && resPoint2<resSize2) {
-			if(res1[resPoint1]>res2[resPoint2]) {
-				res3[resPoint3] =res2[resPoint2];
-				resPoint2++;
+		mergeArray(start, middle, middle+1, end);
+	}
+	
+	private static void mergeArray(int startPoint1, int endPoint1, int startPoint2, int endPoint2) {
+		
+		int arrSize =sortsArr.length;
+		int firstPointIndex =startPoint1, secondPointIndex =startPoint2, tempIndex=0;
+		int index;
+		int[] tempArr =new int[arrSize];
+		
+		while(firstPointIndex<=endPoint1 && secondPointIndex<=endPoint2) {
+			if(sortsArr[firstPointIndex] < sortsArr[secondPointIndex]) {
+				tempArr[tempIndex] =sortsArr[firstPointIndex];
+				firstPointIndex++;
 			}else {
-				res3[resPoint3] =res2[resPoint1];
-				resPoint1++;
+				tempArr[tempIndex] =sortsArr[secondPointIndex];
+				secondPointIndex++;
 			}
-			resPoint3++;
+			tempIndex++;
 		}
 		
-		while(resPoint1<resSize1) {
-			res3[resPoint3] =res1[resPoint1];
-			resPoint1++;
-			resPoint3++;
-		}
-
-		while(resPoint2<resSize2) {
-			res3[resPoint3] =res2[resPoint2];
-			resPoint2++;
-			resPoint3++;
+		for(index =firstPointIndex; index<=endPoint1; index++) {
+			tempArr[tempIndex] =sortsArr[index];
+			tempIndex++;
 		}
 		
-		return res3;	
+		for(index =secondPointIndex; index<=endPoint2; index++) {
+			tempArr[tempIndex] =sortsArr[index];
+			tempIndex++;
+		}
+		
+		for(index=startPoint1; index<=endPoint2; index++) {
+			sortsArr[index] =tempArr[index];
+		}
+		
+		return;
+		
+	}
+	
+	//병합정렬 스택버젼 (제작중)
+	public static int[] MergeSortOnStack(int[] arr) {
+		
+		int arrSize = arr.length;
+		int left, right, mid;
+		
+		Stack<point> splitStack =new Stack<point>();
+		Stack<point> mergeStack =new Stack<point>();
+		
+		splitStack.push(new point(0, arrSize));
+		
+		while(!splitStack.isEmpty()){
+			
+			point pt =splitStack.pop();
+			
+			mid =(pt.getLeft() + pt.getRight())/2;
+			if( (pt.getRight() - pt.getLeft()) > 1) {
+				System.out.println("Left" + pt.getLeft() + "Right" + pt.getRight());
+				splitStack.push(new point(pt.getLeft(), mid));
+				splitStack.push(new point(mid+1, pt.getRight()));
+				
+			}
+			
+		}
+		return arr;
 	}
 	
 }
