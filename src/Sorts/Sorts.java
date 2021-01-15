@@ -184,8 +184,8 @@ public class Sorts {
 		while(!pStack.isEmpty()) {
 			point pt =pStack.pop();
 			
-			left =pt.getLeft();
-			right =pt.getRight();
+			left =pt.getStart();
+			right =pt.getEnd();
 			pivot =(left+right)/2;
 			
 			do{
@@ -202,8 +202,8 @@ public class Sorts {
 				
 			}while(left<=right);
 			
-			if(pt.getLeft() < right) pStack.push(new point(pt.getLeft(), right));
-			if(left < pt.getRight()) pStack.push(new point(left, pt.getRight()));
+			if(pt.getStart() < right) pStack.push(new point(pt.getStart(), right));
+			if(left < pt.getEnd()) pStack.push(new point(left, pt.getEnd()));
 		}
 		
 		return arr;
@@ -239,10 +239,10 @@ public class Sorts {
 	private static void mergeArray(int startPoint1, int endPoint1, int startPoint2, int endPoint2) {
 		
 		int arrSize =sortsArr.length;
-		int firstPointIndex =startPoint1, secondPointIndex =startPoint2, tempIndex=0;
-		int index;
+		int firstPointIndex =startPoint1, secondPointIndex =startPoint2, tempIndex=startPoint1, index=0;
 		int[] tempArr =new int[arrSize];
 		
+		// 엔드포인트는 위에서 총길이에서 -1로 판단하므로 같음으로 처리한다.
 		while(firstPointIndex<=endPoint1 && secondPointIndex<=endPoint2) {
 			if(sortsArr[firstPointIndex] < sortsArr[secondPointIndex]) {
 				tempArr[tempIndex] =sortsArr[firstPointIndex];
@@ -263,39 +263,101 @@ public class Sorts {
 			tempArr[tempIndex] =sortsArr[index];
 			tempIndex++;
 		}
-		
-		for(index=startPoint1; index<=endPoint2; index++) {
-			sortsArr[index] =tempArr[index];
+
+		System.out.print("tempArr : ");
+		for(int i=0; i<tempArr.length; i++) {
+			System.out.print(tempArr[i] + ", " );
 		}
+		System.out.println();
+		
+		for(index =startPoint1; index<=endPoint2; index++) {
+			sortsArr[index] =tempArr[index];
+		}		
+
+		System.out.print("sortsArr : ");
+		for(int i=0; i<sortsArr.length; i++) {
+			System.out.print(sortsArr[i] + ", " );
+		}
+		System.out.println();
 		
 		return;
 		
 	}
 	
-	//병합정렬 스택버젼 (제작중)
-	public static int[] MergeSortOnStack(int[] arr) {
+	//병합정렬 스택버젼
+	public static int[] mergeSortOnStack(int[] arr) {
 		
 		int arrSize = arr.length;
-		int left, right, mid;
+		int start, end, middle;
+		point stackPoint;
 		
 		Stack<point> splitStack =new Stack<point>();
 		Stack<point> mergeStack =new Stack<point>();
 		
-		splitStack.push(new point(0, arrSize));
+		splitStack.push(new point(0, arrSize-1));
 		
 		while(!splitStack.isEmpty()){
 			
-			point pt =splitStack.pop();
+			stackPoint =splitStack.pop();
+			start =stackPoint.getStart();
+			end =stackPoint.getEnd();
 			
-			mid =(pt.getLeft() + pt.getRight())/2;
-			if( (pt.getRight() - pt.getLeft()) > 1) {
-				System.out.println("Left" + pt.getLeft() + "Right" + pt.getRight());
-				splitStack.push(new point(pt.getLeft(), mid));
-				splitStack.push(new point(mid+1, pt.getRight()));
-				
+			if(start >= end) {
+				continue;
+			}
+			
+			System.out.println("start : " + start + " Right : " + end);
+			
+			middle =(start + end)/2;
+			splitStack.push(new point(start, middle));
+			splitStack.push(new point(middle+1, end));
+			
+			mergeStack.push(new point(start, end));
+		}
+		
+		int[] tempArr =new int[arrSize];
+		int firstStartPoint, firstEndPoint, firstIndex, secondStartPoint, secondEndPoint, secondIndex, tempIndex, index;
+		
+		while(!mergeStack.isEmpty()) {
+			
+			stackPoint =mergeStack.pop();
+			
+			firstStartPoint =stackPoint.getStart();
+			firstEndPoint =(stackPoint.getStart()+stackPoint.getEnd())/2;
+			secondStartPoint =((stackPoint.getStart()+stackPoint.getEnd())/2)+1;
+			secondEndPoint =stackPoint.getEnd();
+			
+			firstIndex =firstStartPoint;
+			secondIndex =secondStartPoint;
+			tempIndex =firstStartPoint;
+			
+			while(firstIndex<=firstEndPoint && secondIndex<=secondEndPoint) {
+				if(arr[firstIndex] < arr[secondIndex]) {
+					tempArr[tempIndex] =arr[firstIndex];
+					firstIndex++;
+				}else {
+					tempArr[tempIndex] =arr[secondIndex];
+					secondIndex++;
+				}
+				tempIndex++;
+			}
+			
+			for(index =firstIndex; index<=firstEndPoint; index++) {
+				tempArr[tempIndex] =arr[index ];
+				tempIndex++;
+			}
+			
+			for(index =secondIndex; index<=secondEndPoint; index++) {
+				tempArr[tempIndex] =arr[index];
+				tempIndex++;
+			}
+			
+			for(index=firstStartPoint; index<=secondEndPoint; index++) {
+				arr[index] =tempArr[index];
 			}
 			
 		}
+		
 		return arr;
 	}
 	
@@ -303,17 +365,17 @@ public class Sorts {
 
 //스택사용시 포인트 클래스
 class point {
-	private int left;
-	private int right;
-	public point(int left,  int right) {
-		this.right =right;
-		this.left =left;
+	private int start;
+	private int end;
+	public point(int start,  int end) {
+		this.start =start;
+		this.end =end;
 	}
-	public int getLeft() {
-		return left;
+	public int getEnd() {
+		return end;
 	}
-	public int getRight() {
-		return right;
+	public int getStart() {
+		return start;
 	}
 }
 
