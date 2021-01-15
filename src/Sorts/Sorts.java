@@ -343,7 +343,7 @@ public class Sorts {
 			}
 			
 			for(index =firstIndex; index<=firstEndPoint; index++) {
-				tempArr[tempIndex] =arr[index ];
+				tempArr[tempIndex] =arr[index];
 				tempIndex++;
 			}
 			
@@ -359,6 +359,34 @@ public class Sorts {
 		}
 		
 		return arr;
+	}
+	
+	// ÈüÁ¤·Ä
+	public static int[] heapSort(int[] arr) {
+		
+		int arrSize =arr.length;
+		int[] sortsSize =arr;
+		
+		int index, sizeIndex;
+		int root, leftChild, rightChild;
+		
+		return arr;
+	}
+	
+	private static void Swap(int index1, int index2) {
+		
+		int temp =sortsArr[index1];
+		sortsArr[index2] =sortsArr[index1];
+		sortsArr[index1] =temp;
+		
+		return;
+	}
+	
+	private static int[] heapDown(int startPoint, int endPoint) {
+		
+		
+		
+		return null;
 	}
 	
 }
