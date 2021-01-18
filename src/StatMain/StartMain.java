@@ -11,7 +11,7 @@ public class StartMain {
 		int[] arr3 = {4, 5, 3, 10, 20, 30, 40, 70, 80, 100, 90, 39, 92, 42, 34, 43};
 		
 //		Sorts.mergeArr(arr1, 0, 1, 4);
-		int[] result = Sorts.heapSort(arr1);
+		int[] result = Sorts.heapSort(arr3);
 		
 		System.out.print("t: ");
 		for (int i=0; i<result.length; i++) {

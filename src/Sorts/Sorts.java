@@ -361,33 +361,68 @@ public class Sorts {
 		return arr;
 	}
 	
-	// 힙정렬
+	// 힙정렬  함수로 나누어서  (추후 원큐로 돌리는거 추가)
 	public static int[] heapSort(int[] arr) {
 		
-		int arrSize =arr.length;
-		int[] sortsSize =arr;
+		sortsArr =arr;
+		int arrSize =sortsArr.length;
 		
-		int index, sizeIndex;
-		int root, leftChild, rightChild;
+		int parentsIndex, leftChildIndex, rightChildIndex, rootIndex;
+		int endPointIndex, checkIndex, biggestIndex, temp, index;
+
+		for(index =0; index<arrSize; index++) {
+			System.out.print(sortsArr[index] + ", ");
+		}
+		System.out.println();
 		
-		return arr;
+		rootIndex =0;
+		for(endPointIndex =arrSize; endPointIndex>0; endPointIndex--) {
+			System.out.println("endPointIndex : " + endPointIndex);
+			for(checkIndex =(endPointIndex/2)-1; checkIndex>=0; checkIndex--) {
+				parentsIndex =checkIndex;
+				biggestIndex =checkIndex;
+				while(true) {
+					leftChildIndex =parentsIndex * 2 +1; 
+					rightChildIndex =parentsIndex * 2 +2;
+					
+					temp =sortsArr[parentsIndex];
+					System.out.println("parents : " + parentsIndex + " / leftChildIndex : " + leftChildIndex + " / rightChildIndex : " + rightChildIndex);
+					
+					if(leftChildIndex <endPointIndex && sortsArr[leftChildIndex] > sortsArr[biggestIndex]) {
+						biggestIndex =leftChildIndex;
+					}
+					if(rightChildIndex <endPointIndex && sortsArr[rightChildIndex] > sortsArr[biggestIndex]) {
+						biggestIndex =rightChildIndex;
+					}
+					if(parentsIndex == biggestIndex){
+						break;
+					}	
+					
+					System.out.println("change >> " + "parents : " + parentsIndex + " / biggestIndex : " + biggestIndex + " / leftChildIndex : " + leftChildIndex + " / rightChildIndex : " + rightChildIndex);
+					
+					
+					sortsArr[parentsIndex] =sortsArr[biggestIndex];
+					sortsArr[biggestIndex] =temp;
+					
+					for(index =0; index<arrSize; index++) {
+						System.out.print(sortsArr[index] + ", ");
+					}
+					System.out.println();
+					
+					parentsIndex =biggestIndex;
+				}
+			}
+			
+			temp =sortsArr[endPointIndex-1];
+			sortsArr[endPointIndex-1] =sortsArr[rootIndex];
+			sortsArr[rootIndex] =temp;
+			
+		}
+		
+		return sortsArr;
 	}
 	
-	private static void Swap(int index1, int index2) {
-		
-		int temp =sortsArr[index1];
-		sortsArr[index2] =sortsArr[index1];
-		sortsArr[index1] =temp;
-		
-		return;
-	}
-	
-	private static int[] heapDown(int startPoint, int endPoint) {
-		
-		
-		
-		return null;
-	}
+	//기수정렬 추가예정
 	
 }
 
