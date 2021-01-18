@@ -39,9 +39,9 @@ public class Sorts {
 					count +=1;
 				}
 			}
-		}while(isPass);
+		}while(!isPass);
 		
-		System.out.println("repeat : " + count);
+		System.out.println("\n repeat : " + count);
 		
 		return arr;
 	}
@@ -79,7 +79,7 @@ public class Sorts {
 			}
 		}
 		
-		System.out.println("repeat : " + count);
+//		System.out.println("repeat : " + count);
 		
 		return arr;
 	}
@@ -129,20 +129,31 @@ public class Sorts {
 		
 		int arrSize =arr.length;
 		int i, j, temp, count=0;
+		int index;
 		
+//		System.out.println(arrSize);
+//		for (index=0; index<arrSize; index++) {
+//			System.out.print(arr[index] + ", ");
+//		}
+//		System.out.println();
 		for (i=1; i<arrSize; i++) {
 			temp =arr[i];
 			j=i-1;
-			while(temp<arr[j] && j>=0) {
+			while(j>=0 && temp<arr[j]) {
 				arr[j+1] =arr[j];
 				j--;
 				count+=1;
 			}
 			//반복문 마지막의 j-- 때문에 1 더한다.
 			arr[j+1]=temp;
+
+//			for (index=0; index<arrSize; index++) {
+//				System.out.print(arr[index] + ", ");
+//			}
+//			System.out.println();
 		}
 		
-		System.out.println("count : " + count);
+//		System.out.println("count : " + count);
 		
 		return arr;
 	}
@@ -228,7 +239,7 @@ public class Sorts {
 			return;
 		}
 		
-		System.out.println("start : " + start +  " end : " + end);
+//		System.out.println("start : " + start +  " end : " + end);
 		middle =(start+end)/2;
 		reqMerge(start, middle);
 		reqMerge(middle+1, end);
@@ -264,21 +275,21 @@ public class Sorts {
 			tempIndex++;
 		}
 
-		System.out.print("tempArr : ");
-		for(int i=0; i<tempArr.length; i++) {
-			System.out.print(tempArr[i] + ", " );
-		}
-		System.out.println();
+//		System.out.print("tempArr : ");
+//		for(int i=0; i<tempArr.length; i++) {
+//			System.out.print(tempArr[i] + ", " );
+//		}
+//		System.out.println();
 		
 		for(index =startPoint1; index<=endPoint2; index++) {
 			sortsArr[index] =tempArr[index];
 		}		
 
-		System.out.print("sortsArr : ");
-		for(int i=0; i<sortsArr.length; i++) {
-			System.out.print(sortsArr[i] + ", " );
-		}
-		System.out.println();
+//		System.out.print("sortsArr : ");
+//		for(int i=0; i<sortsArr.length; i++) {
+//			System.out.print(sortsArr[i] + ", " );
+//		}
+//		System.out.println();
 		
 		return;
 		
@@ -306,7 +317,7 @@ public class Sorts {
 				continue;
 			}
 			
-			System.out.println("start : " + start + " Right : " + end);
+//			System.out.println("start : " + start + " Right : " + end);
 			
 			middle =(start + end)/2;
 			splitStack.push(new point(start, middle));
@@ -370,14 +381,14 @@ public class Sorts {
 		int parentsIndex, leftChildIndex, rightChildIndex, rootIndex;
 		int endPointIndex, checkIndex, biggestIndex, temp, index;
 
-		for(index =0; index<arrSize; index++) {
-			System.out.print(sortsArr[index] + ", ");
-		}
-		System.out.println();
+//		for(index =0; index<arrSize; index++) {
+//			System.out.print(sortsArr[index] + ", ");
+//		}
+//		System.out.println();
 		
 		rootIndex =0;
 		for(endPointIndex =arrSize; endPointIndex>0; endPointIndex--) {
-			System.out.println("endPointIndex : " + endPointIndex);
+//			System.out.println("endPointIndex : " + endPointIndex);
 			for(checkIndex =(endPointIndex/2)-1; checkIndex>=0; checkIndex--) {
 				parentsIndex =checkIndex;
 				biggestIndex =checkIndex;
@@ -386,7 +397,7 @@ public class Sorts {
 					rightChildIndex =parentsIndex * 2 +2;
 					
 					temp =sortsArr[parentsIndex];
-					System.out.println("parents : " + parentsIndex + " / leftChildIndex : " + leftChildIndex + " / rightChildIndex : " + rightChildIndex);
+//					System.out.println("parents : " + parentsIndex + " / leftChildIndex : " + leftChildIndex + " / rightChildIndex : " + rightChildIndex);
 					
 					if(leftChildIndex <endPointIndex && sortsArr[leftChildIndex] > sortsArr[biggestIndex]) {
 						biggestIndex =leftChildIndex;
@@ -398,16 +409,16 @@ public class Sorts {
 						break;
 					}	
 					
-					System.out.println("change >> " + "parents : " + parentsIndex + " / biggestIndex : " + biggestIndex + " / leftChildIndex : " + leftChildIndex + " / rightChildIndex : " + rightChildIndex);
+//					System.out.println("change >> " + "parents : " + parentsIndex + " / biggestIndex : " + biggestIndex + " / leftChildIndex : " + leftChildIndex + " / rightChildIndex : " + rightChildIndex);
 					
 					
 					sortsArr[parentsIndex] =sortsArr[biggestIndex];
 					sortsArr[biggestIndex] =temp;
 					
-					for(index =0; index<arrSize; index++) {
-						System.out.print(sortsArr[index] + ", ");
-					}
-					System.out.println();
+//					for(index =0; index<arrSize; index++) {
+//						System.out.print(sortsArr[index] + ", ");
+//					}
+//					System.out.println();
 					
 					parentsIndex =biggestIndex;
 				}
@@ -441,4 +452,5 @@ class point {
 		return start;
 	}
 }
+
 
