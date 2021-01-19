@@ -27,22 +27,6 @@ public class patternSearch {
 		readIndex =skipIndex =0;
 		int txtSize =txt.length();
 		while(readIndex < txtSize) { 
-			System.out.println("a: " + pattern.charAt(skipIndex) + " / b: " + txt.charAt(readIndex));
-			System.out.println("1: " + skipIndex + " / 2: " + readIndex);
-			System.out.println();
-			if(pattern.charAt(skipIndex) == txt.charAt(readIndex)) {
-				skipIndex++;
-				readIndex++;
-			}else if(skipIndex>0 && pattern.charAt(skipIndex) != txt.charAt(readIndex)) {
-				skipIndex =skipTable[skipIndex];
-			}else {
-				readIndex++;
-			}
-			
-			if(skipIndex == patternSize-1) {
-				System.out.println("find this " + (readIndex - patternSize + 1));
-				skipIndex =skipTable[skipIndex];
-			}
 		}
 		
 		return 0;
