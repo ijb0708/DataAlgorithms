@@ -1,4 +1,4 @@
-package Sorts;
+package algorithms;
 
 import java.util.Stack;
 
